@@ -1,17 +1,38 @@
-# @unction/tempLate
+# @unction/mergeLeft
+
 
 ![Tests][BADGE_TRAVIS]
 ![Stability][BADGE_STABILITY]
 ![Dependencies][BADGE_DEPENDENCY]
 
-> mixed -> mixed
+> IterableType -> IterableType -> IterableType
 
-An example function.
+Merges two iterables, preferring left.
 
 ``` javascript
-tempLate(1) // 1
+const left = {
+  alpha: "1",
+  beta: "1"
+}
+const right = {
+  beta: "2",
+  zeta: "3"
+}
+
+mergeLeft(left)(right)
 ```
 
-[BADGE_TRAVIS]: https://img.shields.io/travis/unctionjs/tempLate.svg?maxAge=2592000&style=flat-square
+Which returns:
+
+``` javascript
+{
+  alpha: "1",
+  beta: "1",
+  zeta: "3"
+}
+```
+
+[BADGE_TRAVIS]: https://img.shields.io/travis/unctionjs/mergeLeft.svg?maxAge=2592000&style=flat-square
+
 [BADGE_STABILITY]: https://img.shields.io/badge/stability-strong-green.svg?maxAge=2592000&style=flat-square
-[BADGE_DEPENDENCY]: https://img.shields.io/david/unctionjs/tempLate.svg?maxAge=2592000&style=flat-square
+[BADGE_DEPENDENCY]: https://img.shields.io/david/unctionjs/mergeLeft.svg?maxAge=2592000&style=flat-square
