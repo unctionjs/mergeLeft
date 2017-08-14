@@ -47,10 +47,8 @@
     "tap": "10.3.4"
   },
   "dependencies": {
-    "@unction/couple": "1.0.6",
-    "@unction/isarray": "1.0.5",
-    "@unction/isobject": "1.0.5",
-    "@unction/ispresent": "1.1.4",
-    "ramda": "0.24.1"
+    "@unction/key": "1.0.1",
+    "@unction/type": "1.0.3",
+    "xstream": "10.9.0"
   }
 }
