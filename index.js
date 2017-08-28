@@ -21,10 +21,10 @@ const mapping = {
   Stream: (left: StreamType): Function => (right: StreamType): StreamType => xstream.merge(left, right),
 }
 
-export default function mergeLeft (left: IterableType): Function {
+export default function mergeLeft (left: FunctorType): Function {
   const leftType = type(left)
 
-  return function mergeLeftLeft (right: IterableType): IterableType {
+  return function mergeLeftLeft (right: FunctorType): FunctorType {
     return key(leftType)(mapping)(left)(right)
   }
 }
