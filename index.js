@@ -1,30 +1,71 @@
-/* eslint-disable no-extra-parens */
+/* eslint-disable max-statements */
 import type from "@unction/type"
-import key from "@unction/key"
 import xstream from "xstream"
 
-const mapping = {
-  Array: (left: ArrayType): Function => (right: ArrayType): ArrayType => [
-    ...right,
-    ...left,
-  ],
-  Object: (left: ObjectType): Function => (right: ObjectType): ObjectType => ({
-    ...right,
-    ...left,
-  }),
-  // "Map": (left): Function => (right) => new Error("I have no idea how to merge a Map"),
-  // "WeakMap": (left): Function => (right) => new Error("I have no idea how to merge a WeakMap"),
-  // "Set": (left) => (right): Function => new Error("I have no idea how to merge a Set"),
-  // "WeakSet": (left): Function => (right) => new Error("I have no idea how to merge a WeakSet"),
-  String: (left: string): Function => (right: string): string => `${left}${right}`,
-  // "Buffer": (left): Function => (right) => new Error("I have no idea how to merge a Buffer"),
-  Stream: (left: StreamType): Function => (right: StreamType): StreamType => xstream.merge(left, right),
-}
-
 export default function mergeLeft (left: FunctorType): Function {
-  const leftType = type(left)
-
   return function mergeLeftLeft (right: FunctorType): FunctorType {
-    return key(leftType)(mapping)(left)(right)
+    if (type(left) !== type(right)) {
+      throw new Error(`mergeLeft received a ${type(left)} and ${type(right)} which aren't the same`)
+    }
+
+    switch (type(left)) {
+      case "Array": {
+        return [
+          ...right,
+          ...left,
+        ]
+      }
+
+      case "Object": {
+        return {
+          ...right,
+          ...left,
+        }
+      }
+
+      case "Map": {
+        return new Map([
+          ...right,
+          ...left,
+        ])
+      }
+
+      case "WeakMap": {
+        return new WeakMap([
+          ...right,
+          ...left,
+        ])
+      }
+
+      case "Set": {
+        return new Set([
+          ...right,
+          ...left,
+        ])
+      }
+
+      case "WeakSet": {
+        return new WeakSet([
+          ...right,
+          ...left,
+        ])
+      }
+
+      case "String": {
+        return `${left}${right}`
+      }
+
+      case "Buffer": {
+        throw new Error(`mergeLeft doesn't know how to deal with ${type(left)}`)
+      }
+
+      case "Stream": {
+        return xstream.merge(left, right)
+      }
+
+      default: {
+        throw new Error(`mergeLeft doesn't know how to deal with ${type(left)}`)
+      }
+    }
   }
 }
