@@ -56,10 +56,10 @@
     "flow-bin": "0.51.1",
     "flow-typed": "2.1.5",
     "nyc": "11.1.0",
-    "tap": "10.3.4",
-    "xstream": "10.9.0"
+    "tap": "10.3.4"
   },
   "dependencies": {
-    "@unction/type": "2.0.0"
+    "@unction/type": "2.0.0",
+    "xstream": "10.9.0"
   }
 }
