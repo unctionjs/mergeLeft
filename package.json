@@ -61,5 +61,8 @@
   "dependencies": {
     "@unction/type": "2.0.0",
     "xstream": "10.9.0"
-  }
+  },
+  "files": [
+    "transpiled/index.js"
+  ]
 }
