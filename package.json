@@ -58,7 +58,7 @@
     "tap": "10.3.4"
   },
   "dependencies": {
-    "@unction/type": "2.3.0",
+    "@unction/type": "2.4.0",
     "xstream": "10.9.0"
   },
   "files": [
