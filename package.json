@@ -1,6 +1,6 @@
 {
   "name": "@unction/mergeleft",
-  "version": "3.21.0",
+  "version": "3.22.0",
   "description": "Merges two iterables, preferring left",
   "keywords": [
     "unction",
