@@ -65,7 +65,26 @@ test(({equal, end}) => {
   const right = xstream.of("b")
 
   streamSatisfies(
-    "a---b---|"
+    "'a'---'b'---|"
+  )(
+    (given) => (expected) => equal(given, expected)
+  )(
+    ({length}) =>
+      (position) => {
+        equal(length, position)
+        end()
+      }
+  )(
+    mergeLeft(left)(right)
+  )
+})
+
+test(({equal, end}) => {
+  const left = xstream.of("a").remember()
+  const right = xstream.of("b").remember()
+
+  streamSatisfies(
+    "'a'---'b'---|"
   )(
     (given) => (expected) => equal(given, expected)
   )(
