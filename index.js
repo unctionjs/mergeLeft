@@ -38,16 +38,15 @@ export default function mergeLeft (left: FunctorType): Function {
       }
 
       case "String": {
-        return `${left}${right}`
+        return `${right}${left}`
       }
 
-      case "Buffer": {
-        throw new Error(`mergeLeft doesn't know how to deal with ${type(left)}`)
+      case "Stream": {
+        return xstream.merge(right, left)
       }
 
-      case "Stream":
       case "MemoryStream": {
-        return xstream.merge(left, right)
+        return xstream.merge(right, left).remember()
       }
 
       default: {

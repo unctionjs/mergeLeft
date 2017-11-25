@@ -1,16 +1,17 @@
-/* eslint-disable flowtype/require-parameter-type, flowtype/require-return-type, no-magic-numbers */
+/* eslint-disable flowtype/require-parameter-type, flowtype/require-return-type, flowtype/require-variable-type, no-magic-numbers */
 import {test} from "tap"
 import xstream from "xstream"
 import streamSatisfies from "@unction/streamsatisfies"
 
 import mergeLeft from "./index"
 
-test(({same, end}) => {
+test("Object", ({same, end}) => {
   const left = {
     alpha: "1",
     beta: "1",
   }
   const right = {
+    alpha: "2",
     beta: "2",
     zeta: "3",
   }
@@ -27,7 +28,7 @@ test(({same, end}) => {
   end()
 })
 
-test(({same, end}) => {
+test("Array", ({same, end}) => {
   const left = [
     "a",
     "b",
@@ -48,24 +49,24 @@ test(({same, end}) => {
   end()
 })
 
-test(({same, end}) => {
+test("String", ({same, end}) => {
   const left = "ab"
   const right = "c"
 
   same(
     mergeLeft(left)(right),
-    "abc"
+    "cab"
   )
 
   end()
 })
 
-test(({equal, end}) => {
-  const left = xstream.of("a")
-  const right = xstream.of("b")
+test("Stream", ({equal, end}) => {
+  const left = xstream.fromArray(["a", "b"])
+  const right = xstream.of("c")
 
   streamSatisfies(
-    "'a'---'b'---|"
+    "'c'---'a'---'b'---|"
   )(
     (given) => (expected) => equal(given, expected)
   )(
@@ -79,12 +80,12 @@ test(({equal, end}) => {
   )
 })
 
-test(({equal, end}) => {
-  const left = xstream.of("a").remember()
-  const right = xstream.of("b").remember()
+test("MemoryStream", ({equal, end}) => {
+  const left = xstream.fromArray(["a", "b"]).remember()
+  const right = xstream.of("c").remember()
 
   streamSatisfies(
-    "'a'---'b'---|"
+    "'c'---'a'---'b'---|"
   )(
     (given) => (expected) => equal(given, expected)
   )(
@@ -98,7 +99,7 @@ test(({equal, end}) => {
   )
 })
 
-test(({same, end}) => {
+test("Map", ({same, end}) => {
   const left = new Map([["a", "1"], ["b", "0"]])
   const right = new Map([["b", "2"], ["c", "3"]])
 
@@ -110,7 +111,7 @@ test(({same, end}) => {
   end()
 })
 
-test(({same, end}) => {
+test("Set", ({same, end}) => {
   const left = new Set(["a", "1", "b", "0"])
   const right = new Set(["b", "2", "c", "3"])
 
@@ -136,17 +137,6 @@ test(({throws, end}) => {
 test(({throws, end}) => {
   const left = 1
   const right = 1
-
-  throws(
-    () => mergeLeft(left)(right)
-  )
-
-  end()
-})
-
-test(({throws, end}) => {
-  const left = new Buffer("a")
-  const right = new Buffer("a")
 
   throws(
     () => mergeLeft(left)(right)
