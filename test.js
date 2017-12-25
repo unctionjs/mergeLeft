@@ -1,9 +1,30 @@
 /* eslint-disable flowtype/require-parameter-type, flowtype/require-return-type, flowtype/require-variable-type, no-magic-numbers */
 import {test} from "tap"
-import xstream from "xstream"
+import {of} from "most"
 import streamSatisfies from "@unction/streamsatisfies"
 
 import mergeLeft from "./index"
+
+test("Array", ({same, end}) => {
+  const left = [
+    "a",
+    "b",
+  ]
+  const right = [
+    "c",
+  ]
+
+  same(
+    mergeLeft(left)(right),
+    [
+      "c",
+      "a",
+      "b",
+    ]
+  )
+
+  end()
+})
 
 test("Object", ({same, end}) => {
   const left = {
@@ -28,22 +49,25 @@ test("Object", ({same, end}) => {
   end()
 })
 
-test("Array", ({same, end}) => {
-  const left = [
-    "a",
-    "b",
-  ]
-  const right = [
-    "c",
-  ]
+test("Set", ({same, end}) => {
+  const left = new Set(["a", "1", "b", "0"])
+  const right = new Set(["b", "2", "c", "3"])
 
   same(
     mergeLeft(left)(right),
-    [
-      "c",
-      "a",
-      "b",
-    ]
+    new Set(["a", "1", "b", "0", "2", "c", "3"])
+  )
+
+  end()
+})
+
+test("Map", ({same, end}) => {
+  const left = new Map([["a", "1"], ["b", "0"]])
+  const right = new Map([["b", "2"], ["c", "3"]])
+
+  same(
+    mergeLeft(left)(right),
+    new Map([["a", "1"], ["b", "0"], ["c", "3"]])
   )
 
   end()
@@ -61,14 +85,16 @@ test("String", ({same, end}) => {
   end()
 })
 
-test("Stream", ({equal, end}) => {
-  const left = xstream.fromArray(["a", "b"])
-  const right = xstream.of("c")
+test("Stream", ({equal, doesNotThrow, end}) => {
+  const left = of("a")
+  const right = of("b")
 
   streamSatisfies(
-    "'c'---'a'---'b'---|"
+    "'b'---'a'---|"
   )(
     (given) => (expected) => equal(given, expected)
+  )(
+    doesNotThrow
   )(
     ({length}) =>
       (position) => {
@@ -78,49 +104,6 @@ test("Stream", ({equal, end}) => {
   )(
     mergeLeft(left)(right)
   )
-})
-
-test("MemoryStream", ({equal, end}) => {
-  const left = xstream.fromArray(["a", "b"]).remember()
-  const right = xstream.of("c").remember()
-
-  streamSatisfies(
-    "'c'---'a'---'b'---|"
-  )(
-    (given) => (expected) => equal(given, expected)
-  )(
-    ({length}) =>
-      (position) => {
-        equal(length, position)
-        end()
-      }
-  )(
-    mergeLeft(left)(right)
-  )
-})
-
-test("Map", ({same, end}) => {
-  const left = new Map([["a", "1"], ["b", "0"]])
-  const right = new Map([["b", "2"], ["c", "3"]])
-
-  same(
-    mergeLeft(left)(right),
-    new Map([["a", "1"], ["b", "0"], ["c", "3"]])
-  )
-
-  end()
-})
-
-test("Set", ({same, end}) => {
-  const left = new Set(["a", "1", "b", "0"])
-  const right = new Set(["b", "2", "c", "3"])
-
-  same(
-    mergeLeft(left)(right),
-    new Set(["a", "1", "b", "0", "2", "c", "3"])
-  )
-
-  end()
 })
 
 test(({throws, end}) => {

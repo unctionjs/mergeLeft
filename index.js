@@ -1,8 +1,8 @@
 /* eslint-disable max-statements */
 import type from "@unction/type"
-import xstream from "xstream"
+import {merge} from "most"
 
-export default function mergeLeft (left: FunctorType): Function {
+export default function mergeLeft (left: FunctorType): UnaryFunctionType {
   return function mergeLeftLeft (right: FunctorType): FunctorType {
     if (type(left) !== type(right)) {
       throw new Error(`mergeLeft received a ${type(left)} and ${type(right)} which aren't the same`)
@@ -42,11 +42,7 @@ export default function mergeLeft (left: FunctorType): Function {
       }
 
       case "Stream": {
-        return xstream.merge(right, left)
-      }
-
-      case "MemoryStream": {
-        return xstream.merge(right, left).remember()
+        return merge(right, left)
       }
 
       default: {
