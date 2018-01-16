@@ -5,7 +5,7 @@
 ![Stability][BADGE_STABILITY]
 ![Dependencies][BADGE_DEPENDENCY]
 
-> FunctorType -> FunctorType -> FunctorType
+> FunctorType => FunctorType => FunctorType
 
 Merges two iterables, preferring left.
 
