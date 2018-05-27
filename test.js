@@ -1,4 +1,4 @@
-/* eslint-disable flowtype/require-parameter-type, flowtype/require-return-type, flowtype/require-variable-type, no-magic-numbers */
+/* eslint-disable flowtype/require-variable-type, no-magic-numbers */
 import {test} from "tap"
 import {of} from "most"
 import streamSatisfies from "@unction/streamsatisfies"
