@@ -60,7 +60,7 @@
     "tap": "12.6.1"
   },
   "dependencies": {
-    "@unction/type": "4.2.0"
+    "@unction/type": "4.2.1"
   },
   "files": [
     "index.js",
