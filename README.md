@@ -5,9 +5,9 @@
 ![Stability][BADGE_STABILITY]
 ![Dependencies][BADGE_DEPENDENCY]
 
-> FunctorType => FunctorType => FunctorType
+> EnumerableType<A> => EnumerableType<A> => EnumerableType<A>
 
-Merges two iterables, preferring left.
+Merges two enumerables, preferring left.
 
 ``` javascript
 const left = {
