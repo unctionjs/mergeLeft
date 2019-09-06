@@ -2,7 +2,7 @@
 import { of } from "most";
 import streamSatisfies from "@unction/streamsatisfies";
 
-import mergeLeft from "./index.ts";
+import mergeLeft from "./index";
 
 test("Array", () => {
   const left = [
