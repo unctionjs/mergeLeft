@@ -55,7 +55,7 @@
     "typescript": "3.5.1"
   },
   "dependencies": {
-    "@unction/type": "4.2.1"
+    "@unction/type": "5.0.0"
   },
   "files": [
     "index.ts",
