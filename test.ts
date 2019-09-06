@@ -80,14 +80,14 @@ test("Stream", done => {
   );
 });
 
-test(() => {
+test("works", () => {
   const left = {};
   const right = [];
 
   expect(() => mergeLeft(left)(right)).toThrow();
 });
 
-test(() => {
+test("works", () => {
   const left = 1;
   const right = 1;
 
