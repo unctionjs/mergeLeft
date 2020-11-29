@@ -1,8 +1,8 @@
 import type from "@unction/type";
 import {merge} from "most";
 
-export default function mergeLeft<A> (left: Array<A> | Set<A> | RecordType<unknown, A> | string) {
-  return function mergeLeftLeft (right: Array<A> | Set<A> | RecordType<unknown, A> | string) {
+export default function mergeLeft<A> (left: Array<A> | Set<A> | Record<string | number | symbol, B> | Map<B, A> | string) {
+  return function mergeLeftLeft (right: Array<A> | Set<A> | Record<string | number | symbol, B> | Map<B, A> | string) {
     if (type(left) !== type(right)) {
       throw new Error(`mergeLeft received a ${type(left)} and ${type(right)} which aren't the same`);
     }
